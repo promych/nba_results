@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class DatePicker extends StatelessWidget {
   final bool isVisible;
 
-  const DatePicker({Key key, this.isVisible}) : super(key: key);
+  const DatePicker({Key key, this.isVisible = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class DatePicker extends StatelessWidget {
     );
   }
 
-  Future _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
     showDatePicker(
         context: context,
         initialDate: DateTime.now(),

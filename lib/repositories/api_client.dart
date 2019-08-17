@@ -7,6 +7,7 @@ import 'package:nba_results/models/team.dart';
 
 class ApiClient {
   Future<List<Game>> getScoreboard() async {
+    print('get results');
     const String url =
         'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
     var response = await http.get(url);

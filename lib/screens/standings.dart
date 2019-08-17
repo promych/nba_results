@@ -1,56 +1,23 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nba_results/blocs/standings_bloc.dart';
-import 'package:nba_results/blocs/standings_events.dart';
-import 'package:nba_results/blocs/standings_states.dart';
-import 'package:nba_results/ui/standings_list.dart';
 
-class StandingsPage extends StatefulWidget {
-  @override
-  _StandingsPageState createState() => _StandingsPageState();
-}
+import '../blocs/standings_bloc.dart';
+import '../blocs/standings_states.dart';
+import '../ui/standings_list.dart';
 
-class _StandingsPageState extends State<StandingsPage>
-    with AutomaticKeepAliveClientMixin<StandingsPage> {
-  StandingsBloc _standingsBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    _standingsBloc = StandingsBloc();
-    _standingsBloc.dispatch(FetchStandings());
-  }
-
+class StandingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-    return BlocProvider(
-      builder: (context) => _standingsBloc,
-      child: BlocBuilder(
-          bloc: _standingsBloc,
-          builder: (BuildContext context, StandingsState state) {
-            if (state is StandingsInitialized) {
-              return Container();
-            }
-            if (state is StandingsLoading) {
-              return CircularProgressIndicator();
-            }
-            if (state is StandingsError) {
-              return Text('Error: ${state.message}');
-            }
-            if (state is StandingsLoaded) {
-              return StandingsList(teams: state.teams);
-            }
-          }),
+    return BlocBuilder<StandingsBloc, StandingsState>(
+      builder: (BuildContext context, StandingsState state) {
+        if (state is StandingsError) {
+          return Text('Error: ${state.message}');
+        } else if (state is StandingsLoaded) {
+          return StandingsList(teams: state.teams);
+        }
+        return CircularProgressIndicator();
+      },
     );
   }
-
-  @override
-  void dispose() {
-    _standingsBloc.dispose();
-    super.dispose();
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }

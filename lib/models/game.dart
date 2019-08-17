@@ -9,40 +9,44 @@ class Game extends Equatable {
   final String dateTime;
   final Team awayTeam;
   final Team homeTeam;
-
   final String status;
 
-  Game(
-      {this.gameId,
-      this.name,
-      this.dateTime,
-      this.awayTeam,
-      this.homeTeam,
-      this.status});
+  Game({
+    this.gameId,
+    this.name,
+    this.dateTime,
+    this.awayTeam,
+    this.homeTeam,
+    this.status,
+  });
 
   static Game fromJson(Map<String, dynamic> json) {
-    var awayTeamJson = json['competitions'][0]['competitors'][1]['team'];
-    var homeTeamJson = json['competitions'][0]['competitors'][0]['team'];
+    final awayTeamJson = json['competitions'][0]['competitors'][1];
+    final homeTeamJson = json['competitions'][0]['competitors'][0];
     return Game(
       gameId: json['id'],
       name: json['name'],
       dateTime: json['competitions'][0]['date'],
       awayTeam: Team(
-          name: awayTeamJson['shortDisplayName'],
-          abbreviation: awayTeamJson['abbreviation'],
-          color: awayTeamJson['color'],
-          logoUrl: awayTeamJson['logo'],
-          score: json['competitions'][0]['competitors'][1]['score'],
-          records: json['competitions'][0]['competitors'][1]['records'][0]
-              ['summary']),
+        name: awayTeamJson['team']['shortDisplayName'],
+        abbreviation: awayTeamJson['team']['abbreviation'],
+        color: awayTeamJson['team']['color'],
+        logoUrl: awayTeamJson['team']['logo'],
+        score: awayTeamJson['score'],
+        records: awayTeamJson.containsKey('records')
+            ? awayTeamJson['records'][0]['summary']
+            : '0-0',
+      ),
       homeTeam: Team(
-          name: homeTeamJson['shortDisplayName'],
-          abbreviation: homeTeamJson['abbreviation'],
-          color: homeTeamJson['color'],
-          logoUrl: homeTeamJson['logo'],
-          score: json['competitions'][0]['competitors'][0]['score'],
-          records: json['competitions'][0]['competitors'][0]['records'][0]
-              ['summary']),
+        name: homeTeamJson['team']['shortDisplayName'],
+        abbreviation: homeTeamJson['team']['abbreviation'],
+        color: homeTeamJson['team']['color'],
+        logoUrl: homeTeamJson['team']['logo'],
+        score: homeTeamJson['score'],
+        records: homeTeamJson.containsKey('records')
+            ? homeTeamJson['records'][0]['summary']
+            : '0-0',
+      ),
       status: json['status']['type']['description'],
     );
   }
