@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nba_results/models/team.dart';
 
-class StandingsList extends StatefulWidget {
+class StandingsList extends StatelessWidget {
   final List<Team> teams;
 
-  const StandingsList({Key key, @required this.teams}) : super(key: key);
+  const StandingsList({@required this.teams});
 
-  @override
-  _StandingsListState createState() => _StandingsListState();
-}
-
-class _StandingsListState extends State<StandingsList>
-    with AutomaticKeepAliveClientMixin<StandingsList> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return SingleChildScrollView(
       padding: EdgeInsets.all(10.0),
       child: Column(children: [
@@ -34,12 +27,9 @@ class _StandingsListState extends State<StandingsList>
   }
 
   List<Team> _teamsByConference(String conference) {
-    return widget.teams.where((e) => e.conference == conference).toList()
+    return teams.where((e) => e.conference == conference).toList()
       ..sort((a, b) => int.parse(a.rank).compareTo(int.parse(b.rank)));
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
 
 class _ConferenceTable extends StatelessWidget {

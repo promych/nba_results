@@ -17,7 +17,7 @@ class ScoreboardBloc extends Bloc<ScoreboardEvent, ScoreboardState> {
     if (event is FetchGames) {
       yield ScoreboardLoading();
       try {
-        final games = await scoreboard.fetchGames();
+        final games = await scoreboard.fetchGames(event.byDate);
         yield ScoreboardLoaded(games: games);
       } catch (error) {
         yield ScoreboardError(message: error.toString());

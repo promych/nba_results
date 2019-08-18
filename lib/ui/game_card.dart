@@ -14,17 +14,17 @@ class GameCard extends StatefulWidget {
 }
 
 class _GameCardState extends State<GameCard> {
-  bool showScore;
-  String gameDate;
-  bool isGameScheduled;
+  bool _showScore;
+  String _gameDate;
+  bool _isGameScheduled;
 
   @override
   void initState() {
-    showScore = false;
-    gameDate =
-        DateFormat.yMMMMEEEEd().format(DateTime.parse(widget.game.dateTime));
-    isGameScheduled = widget.game.status == 'Scheduled';
     super.initState();
+    _showScore = false;
+    _gameDate =
+        DateFormat.yMMMMEEEEd().format(DateTime.parse(widget.game.dateTime));
+    _isGameScheduled = widget.game.status == 'Scheduled';
   }
 
   @override
@@ -32,28 +32,29 @@ class _GameCardState extends State<GameCard> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          showScore = !showScore;
+          _showScore = !_showScore;
         });
       },
       child: Card(
         key: ValueKey('${widget.game.name}'),
+        elevation: 5.0,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0),
           child: Column(
-            children: <Widget>[
+            children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
+                children: [
                   Row(
-                    children: <Widget>[
+                    children: [
                       CachedNetworkImage(
                         imageUrl: widget.game.awayTeam.logoUrl,
                         height: 40.0,
                       ),
                       TeamTitle(
                         team: widget.game.awayTeam,
-                        withScore: showScore,
-                        isGameScheduled: isGameScheduled,
+                        withScore: _showScore,
+                        isGameScheduled: _isGameScheduled,
                       )
                     ],
                   ),
@@ -62,11 +63,11 @@ class _GameCardState extends State<GameCard> {
                     child: Text('@', style: TextStyle(fontSize: 24.0)),
                   ),
                   Row(
-                    children: <Widget>[
+                    children: [
                       TeamTitle(
                         team: widget.game.homeTeam,
-                        withScore: showScore,
-                        isGameScheduled: isGameScheduled,
+                        withScore: _showScore,
+                        isGameScheduled: _isGameScheduled,
                       ),
                       CachedNetworkImage(
                         imageUrl: widget.game.homeTeam.logoUrl,
@@ -76,17 +77,18 @@ class _GameCardState extends State<GameCard> {
                   ),
                 ],
               ),
-              Center(
-                child: AnimatedPadding(
-                  padding: showScore
-                      ? const EdgeInsets.only(top: 10.0)
-                      : const EdgeInsets.only(top: 0.0),
-                  duration: Duration(milliseconds: 500),
-                  curve: Curves.bounceOut,
-                  child: showScore
-                      ? Text('${widget.game.status}: $gameDate')
-                      : Container(),
-                ),
+              AnimatedPadding(
+                padding: _showScore
+                    ? const EdgeInsets.only(top: 10.0)
+                    : const EdgeInsets.only(top: 0.0),
+                duration: Duration(milliseconds: 500),
+                curve: Curves.bounceOut,
+                child: _showScore
+                    ? Text(
+                        '${widget.game.status}\n$_gameDate',
+                        textAlign: TextAlign.center,
+                      )
+                    : Container(),
               ),
             ],
           ),

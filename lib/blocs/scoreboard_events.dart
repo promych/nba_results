@@ -6,4 +6,8 @@ abstract class ScoreboardEvent extends Equatable {
   ScoreboardEvent([List props = const []]) : super(props);
 }
 
-class FetchGames extends ScoreboardEvent {}
+class FetchGames extends ScoreboardEvent {
+  final DateTime byDate;
+
+  FetchGames({this.byDate});
+}

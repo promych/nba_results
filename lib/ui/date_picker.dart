@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-// TODO: Date selector in appbar
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nba_results/blocs/scoreboard_bloc.dart';
+import 'package:nba_results/blocs/scoreboard_events.dart';
 
 class DatePicker extends StatelessWidget {
   final bool isVisible;
@@ -16,14 +17,17 @@ class DatePicker extends StatelessWidget {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    showDatePicker(
+    final nowDate = DateTime.now();
+    final pickedDate = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2016),
-        lastDate: DateTime(2020),
+        initialDate: nowDate,
+        firstDate: nowDate.subtract(const Duration(days: 365)),
+        lastDate: nowDate.add(const Duration(days: 365)),
         builder: (BuildContext context, Widget child) {
           return child;
         });
-    // if (picked != null) setState(() => _value = picked.toString());
+    if (pickedDate == null) return;
+    BlocProvider.of<ScoreboardBloc>(context)
+        .dispatch(FetchGames(byDate: pickedDate));
   }
 }

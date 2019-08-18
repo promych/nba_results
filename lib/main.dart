@@ -21,7 +21,6 @@ class App extends StatefulWidget {
 class _AppState extends State<App> with SingleTickerProviderStateMixin {
   int _navIndex = 0;
   List<Widget> _pages = [];
-  // final DateTime dateToday = DateTime.now();
   AnimationController _switchController;
   ScoreboardBloc _scoreboardBloc;
   StandingsBloc _standingsBloc;
@@ -50,50 +49,52 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('NBA Results'),
-          backgroundColor: Colors.grey[800],
-          elevation: 0.0,
-          leading: DatePicker(),
-          actions: [
-            IconButton(
-              icon: AnimatedIcon(
-                icon: AnimatedIcons.list_view,
-                progress: _switchController,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ScoreboardBloc>(builder: (_) => _scoreboardBloc),
+        BlocProvider<StandingsBloc>(builder: (_) => _standingsBloc),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('NBA Results'),
+            backgroundColor: Colors.grey[800],
+            elevation: 0.0,
+            leading: DatePicker(),
+            actions: [
+              IconButton(
+                icon: AnimatedIcon(
+                  icon: AnimatedIcons.list_view,
+                  progress: _switchController,
+                ),
+                onPressed: () {
+                  if (_navIndex == 0) {
+                    _switchController.forward();
+                    setState(() {
+                      _navIndex = 1;
+                    });
+                  } else {
+                    _switchController.reverse();
+                    setState(() {
+                      _navIndex = 0;
+                    });
+                  }
+                },
+              )
+            ],
+          ),
+          body: SafeArea(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                    Colors.white.withOpacity(0.1),
+                    BlendMode.dstATop,
+                  ),
+                  image: AssetImage('assets/ball.jpg'),
+                ),
               ),
-              onPressed: () {
-                if (_navIndex == 0) {
-                  _switchController.forward();
-                  setState(() {
-                    _navIndex = 1;
-                  });
-                } else {
-                  _switchController.reverse();
-                  setState(() {
-                    _navIndex = 0;
-                  });
-                }
-              },
-            )
-          ],
-        ),
-        body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                    Colors.white.withOpacity(0.1), BlendMode.dstATop),
-                image: AssetImage('assets/ball.jpg'),
-              ),
-            ),
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider<ScoreboardBloc>(builder: (_) => _scoreboardBloc),
-                BlocProvider<StandingsBloc>(builder: (_) => _standingsBloc),
-              ],
               child: Center(child: _pages.elementAt(_navIndex)),
             ),
           ),
