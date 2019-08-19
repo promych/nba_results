@@ -6,17 +6,18 @@ class TeamTitle extends StatelessWidget {
   final bool withScore;
   final bool isGameScheduled;
 
-  const TeamTitle(
-      {Key key,
-      @required this.team,
-      this.withScore = false,
-      this.isGameScheduled = true})
-      : super(key: key);
+  const TeamTitle({
+    Key key,
+    @required this.team,
+    this.withScore = false,
+    this.isGameScheduled = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      mainAxisSize: MainAxisSize.max,
+      children: [
         Text(
           '${team.abbreviation}',
           style: TextStyle(
@@ -29,11 +30,14 @@ class TeamTitle extends StatelessWidget {
             child: withScore
                 ? Text(
                     isGameScheduled ? '${team.records}' : '${team.score}',
-                    style: TextStyle(fontSize: 20.0),
+                    style: TextStyle(fontSize: 18.0),
                   )
-                : Text('${team.name}'),
+                : Text(
+                    '${team.name}',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
           ),
-          width: MediaQuery.of(context).size.width / 2 - 100.0,
+          // width: MediaQuery.of(context).size.width / 2 - 100.0,
         ),
       ],
     );

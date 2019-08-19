@@ -69,8 +69,9 @@ class _AppState extends State<App> with TickerProviderStateMixin {
           appBar: AppBar(
             title: Text('NBA Results'),
             backgroundColor: Colors.grey[800],
-            elevation: 0.0,
-            leading: DatePicker(),
+            leading: DatePicker(
+              isVisible: _navIndex == 0,
+            ),
             actions: [
               IconButton(
                 icon: AnimatedIcon(

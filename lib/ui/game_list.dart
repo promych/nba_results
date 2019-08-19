@@ -17,7 +17,7 @@ class _GameListState extends State<GameList> {
     return ListView.builder(
       key: PageStorageKey('Results'),
       scrollDirection: Axis.vertical,
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.all(10.0),
       itemCount: widget.games.length,
       itemBuilder: (BuildContext context, int index) {
         return GameCard(game: widget.games[index]);

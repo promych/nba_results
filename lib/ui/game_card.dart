@@ -15,20 +15,22 @@ class GameCard extends StatefulWidget {
 
 class _GameCardState extends State<GameCard> {
   bool _showScore;
-  String _gameDate;
+  // String _gameDate;
   bool _isGameScheduled;
 
   @override
   void initState() {
     super.initState();
     _showScore = false;
-    _gameDate =
-        DateFormat.yMMMMEEEEd().format(DateTime.parse(widget.game.dateTime));
+    // _gameDate =
     _isGameScheduled = widget.game.status == 'Scheduled';
   }
 
   @override
   Widget build(BuildContext context) {
+    final _gameDate =
+        DateFormat.Hm().format(DateTime.parse(widget.game.dateTime)) +
+            ' CST'; //yMMMMEEEEd
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -38,60 +40,79 @@ class _GameCardState extends State<GameCard> {
       child: Card(
         key: ValueKey('${widget.game.name}'),
         elevation: 5.0,
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: widget.game.awayTeam.logoUrl,
-                        height: 40.0,
+                      Positioned(
+                        left: -50.0,
+                        child: Opacity(
+                          opacity: 0.1,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.game.awayTeam.logoUrl,
+                            height: 150.0,
+                          ),
+                        ),
                       ),
-                      TeamTitle(
-                        team: widget.game.awayTeam,
-                        withScore: _showScore,
-                        isGameScheduled: _isGameScheduled,
-                      )
-                    ],
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: Text('@', style: TextStyle(fontSize: 24.0)),
-                  ),
-                  Row(
-                    children: [
-                      TeamTitle(
-                        team: widget.game.homeTeam,
-                        withScore: _showScore,
-                        isGameScheduled: _isGameScheduled,
-                      ),
-                      CachedNetworkImage(
-                        imageUrl: widget.game.homeTeam.logoUrl,
-                        height: 40.0,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: TeamTitle(
+                          team: widget.game.awayTeam,
+                          withScore: _showScore,
+                          isGameScheduled: _isGameScheduled,
+                        ),
                       ),
                     ],
                   ),
-                ],
-              ),
-              AnimatedPadding(
-                padding: _showScore
-                    ? const EdgeInsets.only(top: 10.0)
-                    : const EdgeInsets.only(top: 0.0),
-                duration: Duration(milliseconds: 500),
-                curve: Curves.bounceOut,
-                child: _showScore
-                    ? Text(
-                        '${widget.game.status}\n$_gameDate',
-                        textAlign: TextAlign.center,
-                      )
-                    : Container(),
-              ),
-            ],
-          ),
+                ),
+                Center(
+                  child: Text('@', style: TextStyle(fontSize: 24.0)),
+                ),
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        child: TeamTitle(
+                          team: widget.game.homeTeam,
+                          withScore: _showScore,
+                          isGameScheduled: _isGameScheduled,
+                        ),
+                      ),
+                      Positioned(
+                        right: -50.0,
+                        child: Opacity(
+                          opacity: 0.1,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.game.homeTeam.logoUrl,
+                            height: 150.0,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            AnimatedPadding(
+              padding: _showScore
+                  ? const EdgeInsets.only(top: 10.0)
+                  : const EdgeInsets.only(top: 0.0),
+              duration: Duration(milliseconds: 500),
+              curve: Curves.bounceOut,
+              child: _showScore
+                  ? Text(
+                      '${widget.game.status} $_gameDate',
+                      textAlign: TextAlign.center,
+                    )
+                  : Container(),
+            ),
+          ],
         ),
       ),
     );
