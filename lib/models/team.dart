@@ -11,6 +11,7 @@ class Team extends Equatable {
   final String records;
   final String wins;
   final String losses;
+  final String pct;
   final String confWinLoss;
   final String rank;
   final String streak;
@@ -25,6 +26,7 @@ class Team extends Equatable {
       this.records,
       this.wins,
       this.losses,
+      this.pct,
       this.confWinLoss,
       this.rank,
       this.streak,
@@ -37,6 +39,7 @@ class Team extends Equatable {
       abbreviation: json['abbreviation'],
       wins: stats['wins'],
       losses: stats['losses'],
+      pct: stats['pct'].trim(),
       confWinLoss: stats['conf_win_loss'],
       rank: stats['rank'],
       streak: stats['l10'],

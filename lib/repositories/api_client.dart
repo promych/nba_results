@@ -41,7 +41,8 @@ class ApiClient {
 
   Future<List<Team>> getStandings() async {
     print('get standings');
-    String year = await _getCurrentSeasonYear();
+    // String year = await _getCurrentSeasonYear();
+    String year = '2018';
     String url = 'http://data.nba.net/json/cms/$year/standings/conference.json';
     var response = await http.get(url);
 

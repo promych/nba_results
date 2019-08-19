@@ -7,6 +7,10 @@ import '../blocs/standings_states.dart';
 import '../ui/standings_list.dart';
 
 class StandingsPage extends StatelessWidget {
+  final TabController tabController;
+
+  const StandingsPage({this.tabController});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<StandingsBloc, StandingsState>(
@@ -14,7 +18,10 @@ class StandingsPage extends StatelessWidget {
         if (state is StandingsError) {
           return Text('Error: ${state.message}');
         } else if (state is StandingsLoaded) {
-          return StandingsList(teams: state.teams);
+          return StandingsList(
+            teams: state.teams,
+            tabController: tabController,
+          );
         }
         return CircularProgressIndicator();
       },
