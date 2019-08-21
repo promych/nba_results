@@ -18,26 +18,24 @@ class TeamTitle extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
+        withScore
+            ? Text(
+                isGameScheduled ? '${team.records}' : '${team.score}',
+                style: TextStyle(
+                  fontSize: 32.0,
+                  color: Color(int.parse('0x${team.color}') + 0xFF000000),
+                ),
+              )
+            : Text(
+                '${team.abbreviation}',
+                style: TextStyle(
+                  color: Color(int.parse('0x${team.color}') + 0xFF000000),
+                  fontSize: 32.0,
+                ),
+              ),
         Text(
-          '${team.abbreviation}',
-          style: TextStyle(
-            color: Color(int.parse('0x${team.color}') + 0xFF000000),
-            fontSize: 32.0,
-          ),
-        ),
-        Container(
-          child: Center(
-            child: withScore
-                ? Text(
-                    isGameScheduled ? '${team.records}' : '${team.score}',
-                    style: TextStyle(fontSize: 18.0),
-                  )
-                : Text(
-                    '${team.name}',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
-          ),
-          // width: MediaQuery.of(context).size.width / 2 - 100.0,
+          '${team.name}',
+          style: TextStyle(fontSize: 18.0),
         ),
       ],
     );
