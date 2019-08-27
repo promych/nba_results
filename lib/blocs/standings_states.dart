@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:nba_results/models/team.dart';
+
+import '../models/team.dart';
 
 @immutable
 abstract class StandingsState extends Equatable {

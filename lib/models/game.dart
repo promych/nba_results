@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:nba_results/models/team.dart';
+
+import '../models/team.dart';
 
 @immutable
 class Game extends Equatable {
@@ -30,7 +31,7 @@ class Game extends Equatable {
       awayTeam: Team(
         name: awayTeamJson['team']['shortDisplayName'],
         abbreviation: awayTeamJson['team']['abbreviation'],
-        color: awayTeamJson['team']['color'],
+        color: awayTeamJson['team']['color'] ?? '000000',
         logoUrl: awayTeamJson['team']['logo'],
         score: awayTeamJson['score'],
         records: awayTeamJson.containsKey('records')
@@ -40,7 +41,7 @@ class Game extends Equatable {
       homeTeam: Team(
         name: homeTeamJson['team']['shortDisplayName'],
         abbreviation: homeTeamJson['team']['abbreviation'],
-        color: homeTeamJson['team']['color'],
+        color: homeTeamJson['team']['color'] ?? '000000',
         logoUrl: homeTeamJson['team']['logo'],
         score: homeTeamJson['score'],
         records: homeTeamJson.containsKey('records')

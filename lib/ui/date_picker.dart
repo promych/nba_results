@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nba_results/blocs/scoreboard_bloc.dart';
-import 'package:nba_results/blocs/scoreboard_events.dart';
+
+import '../blocs/pick_date_bloc.dart';
+import '../blocs/pick_date_events.dart';
+import '../blocs/scoreboard_bloc.dart';
+import '../blocs/scoreboard_events.dart';
 
 class DatePicker extends StatelessWidget {
   final bool isVisible;
 
-  const DatePicker({Key key, this.isVisible = true}) : super(key: key);
+  const DatePicker({this.isVisible = true});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,8 @@ class DatePicker extends StatelessWidget {
           return child;
         });
     if (pickedDate == null) return;
+    BlocProvider.of<PickDateBloc>(context)
+        .dispatch(PickDateSelect(selectedDate: pickedDate));
     BlocProvider.of<ScoreboardBloc>(context)
         .dispatch(FetchGames(byDate: pickedDate));
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nba_results/models/team.dart';
-import 'package:nba_results/repositories/constants.dart';
+
+import '../models/team.dart';
+import '../repositories/constants.dart';
 
 class StandingsList extends StatelessWidget {
   final List<Team> teams;

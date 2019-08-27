@@ -1,1 +1,1 @@
-const List<String> conferences = ['East', 'West'];
+const List<String> conferences = ['West', 'East'];

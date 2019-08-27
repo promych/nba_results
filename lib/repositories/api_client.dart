@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'package:nba_results/models/game.dart';
-import 'package:nba_results/models/team.dart';
+import '../models/game.dart';
+import '../models/team.dart';
 
 class ApiClient {
   Future<List<Game>> getScoreboard(DateTime byDate) async {

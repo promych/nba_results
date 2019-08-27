@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nba_results/models/game.dart';
-import 'package:nba_results/ui/game_card.dart';
+
+import '../models/game.dart';
+import '../ui/game_card.dart';
 
 class GameList extends StatefulWidget {
   final List<Game> games;

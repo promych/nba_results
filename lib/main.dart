@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 import './repositories/constants.dart';
+import './blocs/pick_date_states.dart';
+import './blocs/pick_date_bloc.dart';
 import './blocs/scoreboard_bloc.dart';
 import './blocs/scoreboard_events.dart';
 import './blocs/standings_bloc.dart';
@@ -23,6 +26,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> with TickerProviderStateMixin {
   int _navIndex = 0;
   List<Widget> _pages = [];
+
+  PickDateBloc _pickDateBloc;
   ScoreboardBloc _scoreboardBloc;
   StandingsBloc _standingsBloc;
   AnimationController _switchController;
@@ -32,6 +37,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    _pickDateBloc = PickDateBloc();
     _scoreboardBloc = ScoreboardBloc(scoreboard: Scoreboard());
     _standingsBloc = StandingsBloc();
     _scoreboardBloc.dispatch(FetchGames());
@@ -49,6 +55,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _pickDateBloc?.dispose();
     _scoreboardBloc?.dispose();
     _standingsBloc?.dispose();
     _switchController?.dispose();
@@ -60,6 +67,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<PickDateBloc>.value(value: _pickDateBloc),
         BlocProvider<ScoreboardBloc>(builder: (_) => _scoreboardBloc),
         BlocProvider<StandingsBloc>(builder: (_) => _standingsBloc),
       ],
@@ -67,11 +75,27 @@ class _AppState extends State<App> with TickerProviderStateMixin {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: Text('NBA Results'),
-            backgroundColor: Colors.grey[800],
-            leading: DatePicker(
-              isVisible: _navIndex == 0,
+            title: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('NBA Results'),
+                BlocBuilder<PickDateBloc, PickDateState>(
+                  builder: (_, state) {
+                    if (state is PickDateSelected) {
+                      return Text(
+                        DateFormat.yMd().format(
+                          DateTime.parse(state.selectedDate.toIso8601String()),
+                        ),
+                        style: TextStyle(fontSize: 16.0),
+                      );
+                    }
+                    return Container();
+                  },
+                )
+              ],
             ),
+            backgroundColor: Colors.grey[800],
+            leading: DatePicker(isVisible: _navIndex == 0),
             actions: [
               IconButton(
                 icon: AnimatedIcon(

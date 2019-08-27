@@ -14,7 +14,9 @@ class ResultsPage extends StatelessWidget {
         if (state is ScoreboardError) {
           return Text('error: ${state.message}');
         } else if (state is ScoreboardLoaded) {
-          return GameList(games: state.games);
+          return state.games.isEmpty
+              ? Text('No Games :(')
+              : GameList(games: state.games);
         }
         return CircularProgressIndicator();
       },

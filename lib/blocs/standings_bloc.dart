@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:nba_results/blocs/standings_events.dart';
-import 'package:nba_results/blocs/standings_states.dart';
-import 'package:nba_results/repositories/stendings.dart';
+
+import './standings_events.dart';
+import './standings_states.dart';
+import '../repositories/stendings.dart';
 
 class StandingsBloc extends Bloc<StandingsEvent, StandingsState> {
   final Standings _standings = Standings();

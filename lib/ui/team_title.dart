@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nba_results/models/team.dart';
+
+import '../models/team.dart';
 
 class TeamTitle extends StatelessWidget {
   final Team team;

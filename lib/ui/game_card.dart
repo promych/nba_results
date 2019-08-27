@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nba_results/models/game.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:nba_results/ui/team_title.dart';
+
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+import '../models/game.dart';
+import '../ui/team_title.dart';
 
 class GameCard extends StatefulWidget {
   final Game game;
@@ -52,10 +54,12 @@ class _GameCardState extends State<GameCard> {
                           left: -50.0,
                           child: Opacity(
                             opacity: 0.1,
-                            child: CachedNetworkImage(
-                              imageUrl: widget.game.awayTeam.logoUrl,
-                              height: 150.0,
-                            ),
+                            child: widget.game.awayTeam.logoUrl != null
+                                ? CachedNetworkImage(
+                                    imageUrl: widget.game.awayTeam.logoUrl,
+                                    height: 150.0,
+                                  )
+                                : Container(),
                           ),
                         ),
                       ],
@@ -69,10 +73,12 @@ class _GameCardState extends State<GameCard> {
                           right: -50.0,
                           child: Opacity(
                             opacity: 0.1,
-                            child: CachedNetworkImage(
-                              imageUrl: widget.game.homeTeam.logoUrl,
-                              height: 150.0,
-                            ),
+                            child: widget.game.homeTeam.logoUrl != null
+                                ? CachedNetworkImage(
+                                    imageUrl: widget.game.homeTeam.logoUrl,
+                                    height: 150.0,
+                                  )
+                                : null,
                           ),
                         ),
                       ],

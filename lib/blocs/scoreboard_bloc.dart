@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:nba_results/blocs/scoreboard_events.dart';
-import 'package:nba_results/blocs/scoreboard_states.dart';
-import 'package:nba_results/repositories/scoreboard.dart';
+
+import './scoreboard_events.dart';
+import './scoreboard_states.dart';
+import '../repositories/scoreboard.dart';
 
 class ScoreboardBloc extends Bloc<ScoreboardEvent, ScoreboardState> {
   final Scoreboard scoreboard;
