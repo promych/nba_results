@@ -76,6 +76,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
         // showPerformanceOverlay: true,
         home: Scaffold(
           appBar: AppBar(
+            centerTitle: true,
             title: Column(
               mainAxisSize: MainAxisSize.min,
               children: [

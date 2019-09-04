@@ -7,7 +7,6 @@ import '../models/team.dart';
 
 class ApiClient {
   Future<List<Game>> getScoreboard(DateTime byDate) async {
-    print('get results');
     String url =
         'http://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
     if (byDate != null)
@@ -40,7 +39,6 @@ class ApiClient {
   }
 
   Future<List<Team>> getStandings() async {
-    print('get standings');
     String year = await _getCurrentSeasonYear();
     // String year = '2018';
     String url = 'http://data.nba.net/json/cms/$year/standings/conference.json';
