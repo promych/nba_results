@@ -15,11 +15,11 @@ class StandingsLoading extends StandingsState {}
 class StandingsError extends StandingsState {
   final String message;
 
-  StandingsError({@required this.message});
+  StandingsError({@required this.message}) : super([message]);
 }
 
 class StandingsLoaded extends StandingsState {
   final List<Team> teams;
 
-  StandingsLoaded({@required this.teams});
+  StandingsLoaded({@required this.teams}) : super([teams]);
 }

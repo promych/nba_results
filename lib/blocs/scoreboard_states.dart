@@ -15,11 +15,11 @@ class ScoreboardLoading extends ScoreboardState {}
 class ScoreboardLoaded extends ScoreboardState {
   final List<Game> games;
 
-  ScoreboardLoaded({@required this.games});
+  ScoreboardLoaded({@required this.games}) : super([games]);
 }
 
 class ScoreboardError extends ScoreboardState {
   final String message;
 
-  ScoreboardError({@required this.message});
+  ScoreboardError({@required this.message}) : super([message]);
 }

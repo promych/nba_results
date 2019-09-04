@@ -11,11 +11,11 @@ class PickDateInit extends PickDateState {}
 class PickDateError extends PickDateState {
   final String message;
 
-  PickDateError({@required this.message});
+  PickDateError({@required this.message}) : super([message]);
 }
 
 class PickDateSelected extends PickDateState {
   final DateTime selectedDate;
 
-  PickDateSelected({@required this.selectedDate});
+  PickDateSelected({@required this.selectedDate}) : super([selectedDate]);
 }

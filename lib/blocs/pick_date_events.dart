@@ -9,5 +9,5 @@ abstract class PickDateEvent extends Equatable {
 class PickDateSelect extends PickDateEvent {
   final DateTime selectedDate;
 
-  PickDateSelect({this.selectedDate});
+  PickDateSelect({this.selectedDate}) : super([selectedDate]);
 }

@@ -9,5 +9,5 @@ abstract class ScoreboardEvent extends Equatable {
 class FetchGames extends ScoreboardEvent {
   final DateTime byDate;
 
-  FetchGames({this.byDate});
+  FetchGames({this.byDate}) : super([byDate]);
 }

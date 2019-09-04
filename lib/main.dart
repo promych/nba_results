@@ -73,6 +73,7 @@ class _AppState extends State<App> with TickerProviderStateMixin {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        // showPerformanceOverlay: true,
         home: Scaffold(
           appBar: AppBar(
             title: Column(

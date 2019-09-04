@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nba_results/blocs/pick_date_bloc.dart';
-import 'package:nba_results/blocs/pick_date_events.dart';
 
+import '../blocs/pick_date_bloc.dart';
+import '../blocs/pick_date_events.dart';
 import '../blocs/scoreboard_bloc.dart';
 import '../blocs/scoreboard_states.dart';
 import '../ui/game_list.dart';
