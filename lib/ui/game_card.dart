@@ -28,9 +28,8 @@ class _GameCardState extends State<GameCard> {
 
   @override
   Widget build(BuildContext context) {
-    final _gameDate =
-        DateFormat.Hm().format(DateTime.parse(widget.game.dateTime)) +
-            ' CST'; //yMMMMEEEEd
+    final _gameTime = DateFormat.Hm()
+        .format(DateTime.parse(widget.game.dateTime).toLocal()); //yMMMMEEEEd
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -98,8 +97,17 @@ class _GameCardState extends State<GameCard> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: Text('@', style: TextStyle(fontSize: 24.0)),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('@', style: TextStyle(fontSize: 24.0)),
+                      Text(
+                        widget.game.status != 'Final'
+                            ? '$_gameTime'
+                            : '${widget.game.status}',
+                        style: TextStyle(fontSize: 10.0),
+                      ),
+                    ],
                   ),
                   Expanded(
                     child: Padding(
@@ -113,16 +121,16 @@ class _GameCardState extends State<GameCard> {
                   ),
                 ],
               ),
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    _showScore
-                        ? Text('${widget.game.status} $_gameDate')
-                        : Container(),
-                  ],
-                ),
-              ),
+              // Center(
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: [
+              // _showScore
+              //     ? Text('${widget.game.status} $_gameTime')
+              //     : Container(),
+              //     ],
+              //   ),
+              // ),
               // AnimatedPadding(
               //   padding: _showScore
               //       ? const EdgeInsets.only(top: 10.0)

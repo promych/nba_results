@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nba_results/blocs/pick_date_bloc.dart';
+import 'package:nba_results/blocs/pick_date_events.dart';
 
 import '../blocs/scoreboard_bloc.dart';
 import '../blocs/scoreboard_states.dart';
@@ -14,9 +16,13 @@ class ResultsPage extends StatelessWidget {
         if (state is ScoreboardError) {
           return Text('error: ${state.message}');
         } else if (state is ScoreboardLoaded) {
-          return state.games.isEmpty
-              ? Text('No Games :(')
-              : GameList(games: state.games);
+          if (state.games.isEmpty) {
+            return Text('No Games :(');
+          } else {
+            BlocProvider.of<PickDateBloc>(context).dispatch(PickDateSelect(
+                selectedDate: DateTime.parse(state.games.first.dateTime)));
+            return GameList(games: state.games);
+          }
         }
         return CircularProgressIndicator();
       },

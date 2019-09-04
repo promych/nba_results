@@ -28,26 +28,8 @@ class Game extends Equatable {
       gameId: json['id'],
       name: json['name'],
       dateTime: json['competitions'][0]['date'],
-      awayTeam: Team(
-        name: awayTeamJson['team']['shortDisplayName'],
-        abbreviation: awayTeamJson['team']['abbreviation'],
-        color: awayTeamJson['team']['color'] ?? '000000',
-        logoUrl: awayTeamJson['team']['logo'],
-        score: awayTeamJson['score'],
-        records: awayTeamJson.containsKey('records')
-            ? awayTeamJson['records'][0]['summary']
-            : '0-0',
-      ),
-      homeTeam: Team(
-        name: homeTeamJson['team']['shortDisplayName'],
-        abbreviation: homeTeamJson['team']['abbreviation'],
-        color: homeTeamJson['team']['color'] ?? '000000',
-        logoUrl: homeTeamJson['team']['logo'],
-        score: homeTeamJson['score'],
-        records: homeTeamJson.containsKey('records')
-            ? homeTeamJson['records'][0]['summary']
-            : '0-0',
-      ),
+      awayTeam: Team.fromScoreboardJson(awayTeamJson),
+      homeTeam: Team.fromScoreboardJson(homeTeamJson),
       status: json['status']['type']['description'],
     );
   }

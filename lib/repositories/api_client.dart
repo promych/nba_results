@@ -51,9 +51,10 @@ class ApiClient {
           ['conferences'];
       Iterable data = List.from(body['East']['team']);
       List<Team> teams =
-          data.map((json) => Team.fromJson(json, 'East')).toList();
+          data.map((json) => Team.fromStandingsJson(json, 'East')).toList();
       data = List.from(body['West']['team']);
-      teams.addAll(data.map((json) => Team.fromJson(json, 'West')).toList());
+      teams.addAll(
+          data.map((json) => Team.fromStandingsJson(json, 'West')).toList());
       return teams;
     } else {
       return throw Exception('Error getting standings');

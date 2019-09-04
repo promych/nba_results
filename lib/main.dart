@@ -83,10 +83,10 @@ class _AppState extends State<App> with TickerProviderStateMixin {
                   builder: (_, state) {
                     if (state is PickDateSelected) {
                       return Text(
-                        DateFormat.yMd().format(
+                        DateFormat.yMMMMd().format(
                           DateTime.parse(state.selectedDate.toIso8601String()),
                         ),
-                        style: TextStyle(fontSize: 16.0),
+                        style: TextStyle(fontSize: 14.0),
                       );
                     }
                     return Container();
