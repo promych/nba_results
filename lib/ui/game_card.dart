@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
-import 'package:intl/intl.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/game.dart';
 import '../ui/team_title.dart';
@@ -121,29 +120,6 @@ class _GameCardState extends State<GameCard> {
                   ),
                 ],
               ),
-              // Center(
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: [
-              // _showScore
-              //     ? Text('${widget.game.status} $_gameTime')
-              //     : Container(),
-              //     ],
-              //   ),
-              // ),
-              // AnimatedPadding(
-              //   padding: _showScore
-              //       ? const EdgeInsets.only(top: 10.0)
-              //       : const EdgeInsets.only(top: 0.0),
-              //   duration: Duration(milliseconds: 500),
-              //   curve: Curves.bounceOut,
-              //   child: _showScore
-              //       ? Text(
-              //           '${widget.game.status} $_gameDate',
-              //           textAlign: TextAlign.center,
-              //         )
-              //       : Container(),
-              // ),
             ],
           ),
         ),
