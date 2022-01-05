@@ -9,7 +9,7 @@ import '../ui/standings_list.dart';
 class StandingsPage extends StatelessWidget {
   final TabController tabController;
 
-  const StandingsPage({this.tabController});
+  const StandingsPage({required this.tabController});
 
   @override
   Widget build(BuildContext context) {

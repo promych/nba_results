@@ -7,7 +7,7 @@ class StandingsList extends StatelessWidget {
   final List<Team> teams;
   final TabController tabController;
 
-  const StandingsList({@required this.teams, @required this.tabController});
+  const StandingsList({required this.teams, required this.tabController});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +15,26 @@ class StandingsList extends StatelessWidget {
       controller: tabController,
       children: [
         for (var conf in conferences)
-          SingleChildScrollView(
-            child: _PaginatedConferenceTable(
-              conference: conf,
-              teams: _teamsByConference(conf),
-            ),
-          ),
+          Builder(builder: (_) {
+            final teamsByConference = _teamsByConference(conf);
+            if (teamsByConference.any((e) => e.rank == null)) {
+              return const SizedBox();
+            }
+
+            return SingleChildScrollView(
+              child: _PaginatedConferenceTable(
+                conference: conf,
+                teams: teamsByConference,
+              ),
+            );
+          }),
       ],
     );
   }
 
   List<Team> _teamsByConference(String conference) {
     return teams.where((e) => e.conference == conference).toList()
-      ..sort((a, b) => int.parse(a.rank).compareTo(int.parse(b.rank)));
+      ..sort((a, b) => int.parse(a.rank!).compareTo(int.parse(b.rank!)));
   }
 }
 
@@ -35,7 +42,10 @@ class _PaginatedConferenceTable extends StatelessWidget {
   final String conference;
   final List<Team> teams;
 
-  const _PaginatedConferenceTable({this.conference, this.teams});
+  const _PaginatedConferenceTable({
+    required this.conference,
+    required this.teams,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -62,15 +72,15 @@ class _PaginatedConferenceTable extends StatelessWidget {
 class _ConferenceDataTableSource extends DataTableSource {
   final List<Team> teams;
 
-  _ConferenceDataTableSource({@required this.teams});
+  _ConferenceDataTableSource({required this.teams});
 
   @override
   DataRow getRow(int index) {
-    if (index >= rowCount) return null;
+    // if (index >= rowCount) return null;
     final Team team = teams[index];
     return DataRow.byIndex(index: index, selected: false, cells: [
       DataCell(
-        int.parse(team.rank) < 9 ? Text(team.rank) : Text(''),
+        int.parse(team.rank!) < 9 ? Text(team.rank!) : Text(''),
       ),
       DataCell(Text('${team.name}')),
       DataCell(Text('${team.wins}')),

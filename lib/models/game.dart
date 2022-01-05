@@ -13,12 +13,12 @@ class Game extends Equatable {
   final String status;
 
   Game({
-    this.gameId,
-    this.name,
-    this.dateTime,
-    this.awayTeam,
-    this.homeTeam,
-    this.status,
+    required this.gameId,
+    required this.name,
+    required this.dateTime,
+    required this.awayTeam,
+    required this.homeTeam,
+    required this.status,
   });
 
   static Game fromJson(Map<String, dynamic> json) {
@@ -33,4 +33,7 @@ class Game extends Equatable {
       status: json['status']['type']['description'],
     );
   }
+
+  @override
+  List<Object> get props => [gameId, name];
 }

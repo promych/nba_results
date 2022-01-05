@@ -9,7 +9,7 @@ class TeamTitle extends StatelessWidget {
   final TextStyle _teamTextStyle;
 
   TeamTitle({
-    @required this.team,
+    required this.team,
     this.withScore = false,
     this.isGameScheduled = true,
   }) : _teamTextStyle = TextStyle(

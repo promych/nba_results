@@ -8,7 +8,7 @@ import '../ui/game_card.dart';
 class GameList extends StatelessWidget {
   final List<Game> games;
 
-  const GameList({@required this.games});
+  const GameList({required this.games});
 
   @override
   Widget build(BuildContext context) {

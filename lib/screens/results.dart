@@ -18,8 +18,11 @@ class ResultsPage extends StatelessWidget {
           if (state.games.isEmpty) {
             return Text('No Games :(');
           } else {
-            BlocProvider.of<PickDateBloc>(context).dispatch(PickDateSelect(
-                selectedDate: DateTime.parse(state.games.first.dateTime)));
+            BlocProvider.of<PickDateBloc>(context).add(
+              PickDateSelect(
+                selectedDate: DateTime.parse(state.games.first.dateTime),
+              ),
+            );
             return GameList(games: state.games);
           }
         }

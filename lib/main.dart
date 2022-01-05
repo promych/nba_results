@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:nba_results/repositories/api_client.dart';
+import 'package:nba_results/repositories/standings.dart';
 
 import './repositories/constants.dart';
 import './blocs/pick_date_states.dart';
@@ -27,24 +29,28 @@ class _AppState extends State<App> with TickerProviderStateMixin {
   int _navIndex = 0;
   List<Widget> _pages = [];
 
-  PickDateBloc _pickDateBloc;
-  ScoreboardBloc _scoreboardBloc;
-  StandingsBloc _standingsBloc;
-  AnimationController _switchController;
-  TabController _tabController;
+  late ApiClient _apiClient;
+  late PickDateBloc _pickDateBloc;
+  late ScoreboardBloc _scoreboardBloc;
+  late StandingsBloc _standingsBloc;
+  late AnimationController _switchController;
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
 
     _pickDateBloc = PickDateBloc();
-    _scoreboardBloc = ScoreboardBloc(scoreboard: Scoreboard());
-    _standingsBloc = StandingsBloc();
-    _scoreboardBloc.dispatch(FetchGames());
-    _standingsBloc.dispatch(FetchStandings());
+    _apiClient = ApiClient();
+    _scoreboardBloc = ScoreboardBloc(repo: ScoreboardRepo(_apiClient));
+    _standingsBloc = StandingsBloc(repo: StandingsRepo(_apiClient));
+    _scoreboardBloc.add(FetchGames(byDate: DateTime.now()));
+    _standingsBloc.add(FetchStandings());
 
-    _switchController =
-        AnimationController(duration: Duration(milliseconds: 250), vsync: this);
+    _switchController = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    );
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
 
     _pages = [
@@ -54,26 +60,15 @@ class _AppState extends State<App> with TickerProviderStateMixin {
   }
 
   @override
-  void dispose() {
-    _pickDateBloc?.dispose();
-    _scoreboardBloc?.dispose();
-    _standingsBloc?.dispose();
-    _switchController?.dispose();
-    _tabController?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PickDateBloc>.value(value: _pickDateBloc),
-        BlocProvider<ScoreboardBloc>(builder: (_) => _scoreboardBloc),
-        BlocProvider<StandingsBloc>(builder: (_) => _standingsBloc),
+        BlocProvider<ScoreboardBloc>(create: (_) => _scoreboardBloc),
+        BlocProvider<StandingsBloc>(create: (_) => _standingsBloc),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // showPerformanceOverlay: true,
         home: Scaffold(
           appBar: AppBar(
             centerTitle: true,

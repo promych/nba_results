@@ -2,24 +2,22 @@ import 'package:bloc/bloc.dart';
 
 import './standings_events.dart';
 import './standings_states.dart';
-import '../repositories/stendings.dart';
+import '../repositories/standings.dart';
 
 class StandingsBloc extends Bloc<StandingsEvent, StandingsState> {
-  final Standings _standings = Standings();
+  final StandingsRepo repo;
 
-  @override
-  StandingsState get initialState => StandingsInitialized();
+  StandingsBloc({required this.repo}) : super(StandingsInitialized()) {
+    on<FetchStandings>(_emitStandings);
+  }
 
-  @override
-  Stream<StandingsState> mapEventToState(StandingsEvent event) async* {
-    if (event is FetchStandings) {
-      yield StandingsLoading();
-      try {
-        final teams = await _standings.fetchStandings();
-        yield StandingsLoaded(teams: teams);
-      } catch (error) {
-        yield StandingsError(message: error.toString());
-      }
+  Future<void> _emitStandings(_, Emitter emit) async {
+    emit(StandingsLoading());
+    try {
+      final teams = await repo.fetchStandings();
+      emit(StandingsLoaded(teams: teams));
+    } catch (error) {
+      emit(StandingsError(message: error.toString()));
     }
   }
 }

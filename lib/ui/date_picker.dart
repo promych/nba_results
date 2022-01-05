@@ -26,13 +26,13 @@ class DatePicker extends StatelessWidget {
         initialDate: nowDate,
         firstDate: nowDate.subtract(const Duration(days: 365)),
         lastDate: nowDate.add(const Duration(days: 365)),
-        builder: (BuildContext context, Widget child) {
-          return child;
+        builder: (BuildContext context, Widget? child) {
+          return child ?? const SizedBox();
         });
     if (pickedDate == null) return;
     BlocProvider.of<PickDateBloc>(context)
-        .dispatch(PickDateSelect(selectedDate: pickedDate));
+        .add(PickDateSelect(selectedDate: pickedDate));
     BlocProvider.of<ScoreboardBloc>(context)
-        .dispatch(FetchGames(byDate: pickedDate));
+        .add(FetchGames(byDate: pickedDate));
   }
 }

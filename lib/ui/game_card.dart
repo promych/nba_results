@@ -8,15 +8,15 @@ import '../ui/team_title.dart';
 class GameCard extends StatefulWidget {
   final Game game;
 
-  const GameCard({Key key, @required this.game}) : super(key: key);
+  const GameCard({Key? key, required this.game}) : super(key: key);
 
   @override
   _GameCardState createState() => _GameCardState();
 }
 
 class _GameCardState extends State<GameCard> {
-  bool _showScore;
-  bool _isGameScheduled;
+  late bool _showScore;
+  late bool _isGameScheduled;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _GameCardState extends State<GameCard> {
                             opacity: 0.1,
                             child: widget.game.awayTeam.logoUrl != null
                                 ? CachedNetworkImage(
-                                    imageUrl: widget.game.awayTeam.logoUrl,
+                                    imageUrl: widget.game.awayTeam.logoUrl!,
                                     height: 150.0,
                                   )
                                 : Container(),
@@ -73,7 +73,7 @@ class _GameCardState extends State<GameCard> {
                             opacity: 0.1,
                             child: widget.game.homeTeam.logoUrl != null
                                 ? CachedNetworkImage(
-                                    imageUrl: widget.game.homeTeam.logoUrl,
+                                    imageUrl: widget.game.homeTeam.logoUrl!,
                                     height: 150.0,
                                   )
                                 : null,

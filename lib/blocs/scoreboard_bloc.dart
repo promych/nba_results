@@ -1,28 +1,23 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import './scoreboard_events.dart';
 import './scoreboard_states.dart';
 import '../repositories/scoreboard.dart';
 
 class ScoreboardBloc extends Bloc<ScoreboardEvent, ScoreboardState> {
-  final Scoreboard scoreboard;
+  final ScoreboardRepo repo;
 
-  ScoreboardBloc({@required this.scoreboard});
+  ScoreboardBloc({required this.repo}) : super(ScorepoardInitialized()) {
+    on<FetchGames>(_emitGames);
+  }
 
-  @override
-  get initialState => ScorepoardInitialized();
-
-  @override
-  Stream<ScoreboardState> mapEventToState(event) async* {
-    if (event is FetchGames) {
-      yield ScoreboardLoading();
-      try {
-        final games = await scoreboard.fetchGames(event.byDate);
-        yield ScoreboardLoaded(games: games);
-      } catch (error) {
-        yield ScoreboardError(message: error.toString());
-      }
+  Future<void> _emitGames(FetchGames event, Emitter emit) async {
+    emit(ScoreboardLoading());
+    try {
+      final games = await repo.fetchGames(event.byDate);
+      emit(ScoreboardLoaded(games: games));
+    } catch (error) {
+      emit(ScoreboardError(message: error.toString()));
     }
   }
 }

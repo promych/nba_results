@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DecoratedContainer extends StatelessWidget {
   final Widget child;
 
-  const DecoratedContainer({@required this.child});
+  const DecoratedContainer({required this.child});
 
   @override
   Widget build(BuildContext context) {

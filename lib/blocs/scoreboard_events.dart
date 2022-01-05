@@ -3,11 +3,14 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class ScoreboardEvent extends Equatable {
-  ScoreboardEvent([List props = const []]) : super(props);
+  ScoreboardEvent([List props = const []]);
+
+  @override
+  List<Object> get props => props;
 }
 
 class FetchGames extends ScoreboardEvent {
   final DateTime byDate;
 
-  FetchGames({this.byDate}) : super([byDate]);
+  FetchGames({required this.byDate}) : super([byDate]);
 }
